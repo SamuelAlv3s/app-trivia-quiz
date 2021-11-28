@@ -1,20 +1,28 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <img src="assets/logo.png" />
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="wrapper" id="menu" #menu>
+    <ion-button expand="full" color="light" (click)="openCategories()">
+      New Game
+    </ion-button>
+    <ion-button expand="full" color="light" (click)="openHighscore()">
+      Highscore
+    </ion-button>
+  </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div class="wrapper" id="score" #score>
+    <ion-button expand="full" fill="clear" color="light" (click)="showMenu()">
+      <ion-icon name="chevron-back-outline" slot="start"></ion-icon>Back
+    </ion-button>
+
+    <h2>Highscore</h2>
+  </div>
+
+  <div class="wrapper" id="game" #game>
+    <ion-button expand="full" fill="clear" color="light" (click)="showMenu()">
+      <ion-icon name="chevron-back-outline" slot="start"></ion-icon>Back
+    </ion-button>
+
+    <h2>Game</h2>
   </div>
 </ion-content>

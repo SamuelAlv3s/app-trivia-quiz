@@ -1,27 +1,27 @@
-#container {
-  text-align: center;
+img {
+  width: 60%;
+  margin-top: 80px;
+}
 
+ion-button {
+  width: 70%;
+}
+
+.wrapper {
+  height: 70%;
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  width: 100%;
+  top: 200px;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+#menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+#game,
+#score {
+  transform: translateX(1000px);
 }
