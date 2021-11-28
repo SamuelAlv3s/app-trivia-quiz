@@ -22,4 +22,19 @@ export class QuestionService {
       return of(this.categories);
     }
   }
+
+  getQuestionsForCategories(categoryId) {
+    return this.http
+      .get(`https://opentdb.com/api.php?amount=10&caregory=${categoryId}`)
+      .pipe(
+        map((data: any) => {
+          let results = data.results;
+          results = results.map((q) => {
+            q.answers = [...q.incorrect_answers, q.correct_answer];
+            return q;
+          });
+          return results;
+        })
+      );
+  }
 }
