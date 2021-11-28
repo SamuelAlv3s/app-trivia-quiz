@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content [scrollY]="scrollEnabled">
   <img src="assets/logo.png" />
 
   <div class="wrapper" id="menu" #menu>
@@ -24,5 +24,18 @@
     </ion-button>
 
     <h2>Game</h2>
+
+    <ion-row>
+      <ion-col
+        size="6"
+        *ngFor="let cat of categories"
+        tappable
+        (click)="startGame(cat)"
+      >
+        <div class="category">
+          <span>{{cat.name}}</span>
+        </div>
+      </ion-col>
+    </ion-row>
   </div>
 </ion-content>

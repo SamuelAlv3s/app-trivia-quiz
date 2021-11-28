@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AnimationController, Platform, Animation } from '@ionic/angular';
+import { QuestionService } from '../services/question.service';
 
 @Component({
   selector: 'app-home',
@@ -15,11 +16,20 @@ export class HomePage implements AfterViewInit {
   showGame: Animation;
   showScore: Animation;
   activeView = 'menu';
+  categories = [];
+  scrollEnabled = false;
 
   constructor(
     private animationCtrl: AnimationController,
-    private plt: Platform
-  ) {}
+    private plt: Platform,
+    private questionService: QuestionService
+  ) {
+    this.questionService.getCategories().subscribe((res) => {
+      console.log('Categories: ', res);
+
+      this.categories = res;
+    });
+  }
 
   ngAfterViewInit() {
     const viewWidth = this.plt.width();
@@ -53,12 +63,14 @@ export class HomePage implements AfterViewInit {
     this.hideMenuAnimation.direction('alternate').play();
     this.showGame.direction('alternate').play();
     this.activeView = 'game';
+    this.scrollEnabled = true;
   }
 
   openHighscore() {
     this.hideMenuAnimation.direction('alternate').play();
     this.showScore.direction('alternate').play();
     this.activeView = 'score';
+    this.scrollEnabled = true;
   }
 
   showMenu() {
@@ -71,5 +83,10 @@ export class HomePage implements AfterViewInit {
     }
 
     this.activeView = 'menu';
+    this.scrollEnabled = false;
+  }
+
+  startGame(categorie) {
+    console.log('Selected categorie: ', categorie);
   }
 }

@@ -24,4 +24,20 @@ ion-button {
 #game,
 #score {
   transform: translateX(1000px);
+  ion-button {
+    margin: auto;
+  }
+}
+
+.category {
+  background: #ffffffc7;
+  padding: 10px;
+  height: 12vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    font-weight: 300;
+  }
 }
