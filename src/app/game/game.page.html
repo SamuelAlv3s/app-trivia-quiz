@@ -8,4 +8,37 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen="true"> </ion-content>
+<ion-content fullscreen="true">
+  <div *ngIf="questions.length > 0 && done < 10">
+    <swiper [allowTouchMove]="false" #swiper class="game-wrapper">
+      <ng-template swiperSlide *ngFor="let q of questions">
+        <ion-card>
+          <ion-card-content>
+            <div class="question" [innerHtml]="q.question"></div>
+            <div *ngIf="q.type === 'multiple'; else select">
+              <ion-button
+                expand="full"
+                *ngFor="let a of q.answers"
+                (click)="selectAnswer(q, a)"
+                class="ion-text-wrap"
+              >
+                <span [innerHtml]="a"></span>
+              </ion-button>
+            </div>
+
+            <ng-template #select>
+              <ion-button expand="full" (click)="selectAnswer(q, 'True')"
+                >Yes</ion-button
+              >
+              <ion-button expand="full" (click)="selectAnswer(q, 'False')"
+                >No</ion-button
+              >
+            </ng-template>
+          </ion-card-content>
+        </ion-card>
+      </ng-template>
+    </swiper>
+  </div>
+
+  <div *ngIf="done >= 10">FINISHED</div>
+</ion-content>

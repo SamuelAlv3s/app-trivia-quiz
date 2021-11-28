@@ -8,13 +8,16 @@ import { GamePageRoutingModule } from './game-routing.module';
 
 import { GamePage } from './game.page';
 
+import { SwiperModule } from 'swiper/angular';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    GamePageRoutingModule
+    GamePageRoutingModule,
+    SwiperModule,
   ],
-  declarations: [GamePage]
+  declarations: [GamePage],
 })
 export class GamePageModule {}
