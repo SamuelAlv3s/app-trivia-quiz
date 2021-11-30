@@ -19,7 +19,7 @@ export class HomePage implements AfterViewInit {
   activeView = 'menu';
   categories = [];
   scrollEnabled = false;
-
+  scores = [];
   constructor(
     private animationCtrl: AnimationController,
     private plt: Platform,
@@ -68,7 +68,8 @@ export class HomePage implements AfterViewInit {
     this.scrollEnabled = true;
   }
 
-  openHighscore() {
+  async openHighscore() {
+    this.scores = await this.questionService.loadScores();
     this.hideMenuAnimation.direction('alternate').play();
     this.showScore.direction('alternate').play();
     this.activeView = 'score';

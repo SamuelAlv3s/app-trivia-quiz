@@ -9,6 +9,13 @@
 </ion-header>
 
 <ion-content fullscreen="true">
+  <div class="progress-bar">
+    <div class="progress" [style.width]="(questionIndex + 1) * 10 + '%'"></div>
+  </div>
+
+  <div class="ion-text-center">
+    <ion-label color="light">{{questionIndex + 1}}/10</ion-label>
+  </div>
   <div class="correct-answer" #correct>
     <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
   </div>
@@ -54,5 +61,24 @@
     </swiper>
   </div>
 
-  <div *ngIf="done >= 10">FINISHED</div>
+  <div [hidden]="done < 10">
+    <canvas #confetticanvas></canvas>
+    <div class="score">
+      <h2>Your score: <b>{{points}}</b></h2>
+      <ion-input
+        [(ngModel)]="name"
+        placeholder="Name"
+        class="ion-margin"
+      ></ion-input>
+
+      <ion-button
+        (click)="saveScore()"
+        class="ion-margin"
+        [disabled]="name === ''"
+      >
+        <ion-icon name="save-outline" slot="start"></ion-icon>
+        Save & End game
+      </ion-button>
+    </div>
+  </div>
 </ion-content>

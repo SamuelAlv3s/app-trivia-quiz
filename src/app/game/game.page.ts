@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
@@ -13,6 +14,7 @@ import {
 } from '@ionic/angular';
 import { SwiperComponent } from 'swiper/angular';
 import { QuestionService } from '../services/question.service';
+import * as confetti from 'canvas-confetti';
 
 @Component({
   selector: 'app-game',
@@ -23,18 +25,22 @@ export class GamePage implements OnInit, AfterViewInit {
   @ViewChild('swiper', { static: false }) swiper: SwiperComponent;
   @ViewChild('correct', { static: false }) correct: ElementRef;
   @ViewChild('incorrect', { static: false }) incorrect: ElementRef;
+  @ViewChild('confetticanvas', { static: false }) confetticanvas: ElementRef;
   done = 0;
   questions = [];
   points = 0;
   correctAnimation: Animation;
   incorrectAnimation: Animation;
   markAnswer = false;
+  questionIndex = 0;
+  name = '';
   constructor(
     private route: ActivatedRoute,
     private questionService: QuestionService,
     private alertCtrl: AlertController,
     private router: Router,
-    private animationCtrl: AnimationController
+    private animationCtrl: AnimationController,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -55,8 +61,8 @@ export class GamePage implements OnInit, AfterViewInit {
       .duration(1500)
       .keyframes([
         { offset: 0, transform: 'translateY(100vh)' },
-        { offset: 0.3, transform: 'translateY(75vh)' },
-        { offset: 0.9, transform: 'translateY(75vh)' },
+        { offset: 0.3, transform: 'translateY(70vh)' },
+        { offset: 0.9, transform: 'translateY(70vh)' },
         { offset: 1, transform: 'translateY(100vh)' },
       ])
       .onFinish(() => {
@@ -69,19 +75,13 @@ export class GamePage implements OnInit, AfterViewInit {
       .duration(1500)
       .keyframes([
         { offset: 0, transform: 'translateY(100vh)' },
-        { offset: 0.3, transform: 'translateY(75vh)' },
-        { offset: 0.9, transform: 'translateY(75vh)' },
+        { offset: 0.3, transform: 'translateY(70vh)' },
+        { offset: 0.9, transform: 'translateY(70vh)' },
         { offset: 1, transform: 'translateY(100vh)' },
       ])
       .onFinish(() => {
         this.afterAnswer();
       });
-  }
-
-  afterAnswer() {
-    this.done += 1;
-    this.markAnswer = false;
-    this.swiper.swiperRef.slideNext(500);
   }
 
   async endGame() {
@@ -113,5 +113,41 @@ export class GamePage implements OnInit, AfterViewInit {
     } else {
       this.incorrectAnimation.play();
     }
+  }
+
+  afterAnswer() {
+    this.markAnswer = false;
+    this.done += 1;
+
+    if (this.done < 10) {
+      this.questionIndex += 1;
+      this.swiper.swiperRef.slideNext(500);
+      this.changeDetectorRef.detectChanges();
+    } else {
+      this.changeDetectorRef.detectChanges();
+      this.showConfetti();
+    }
+  }
+
+  showConfetti() {
+    confetti
+      .create(this.confetticanvas.nativeElement, { resize: true })({
+        particleCount: 200,
+        spread: 90,
+        decay: 0.91,
+        origin: {
+          x: 0.5,
+          y: 0.7,
+        },
+      })
+      .then((res) => {
+        console.log('confetti done');
+      });
+  }
+
+  saveScore() {
+    this.questionService.saveScore(this.points, this.name).then(() => {
+      this.router.navigateByUrl('/', { replaceUrl: true });
+    });
   }
 }

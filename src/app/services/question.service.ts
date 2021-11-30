@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Storage } from '@capacitor/storage';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -36,5 +37,32 @@ export class QuestionService {
           return results;
         })
       );
+  }
+
+  async saveScore(score, name) {
+    const { value }: any = await Storage.get({ key: 'scores' });
+    let scores = [];
+    const newScore = { score, name };
+    if (value) {
+      scores = JSON.parse(value);
+      scores.push(newScore);
+    } else {
+      scores = [newScore];
+    }
+
+    return Storage.set({ key: 'scores', value: JSON.stringify(scores) });
+  }
+
+  async loadScores() {
+    const { value }: any = await Storage.get({ key: 'scores' });
+
+    if (value) {
+      const scores = JSON.parse(value);
+      return scores.sort((a, b) => {
+        return b.score - a.score;
+      });
+    } else {
+      return [];
+    }
   }
 }
