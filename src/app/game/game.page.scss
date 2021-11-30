@@ -7,3 +7,11 @@ ion-toolbar {
   font-size: x-large;
   margin-bottom: 50px;
 }
+
+.correct-answer,
+.incorrect-answer {
+  transform: translateY(100vh);
+  ion-icon {
+    font-size: 64px;
+  }
+}

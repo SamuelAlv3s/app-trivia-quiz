@@ -9,6 +9,13 @@
 </ion-header>
 
 <ion-content fullscreen="true">
+  <div class="correct-answer" #correct>
+    <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+  </div>
+
+  <div class="incorrect-answer" #incorrect>
+    <ion-icon name="close-circle-outline" color="danger"></ion-icon>
+  </div>
   <div *ngIf="questions.length > 0 && done < 10">
     <swiper [allowTouchMove]="false" #swiper class="game-wrapper">
       <ng-template swiperSlide *ngFor="let q of questions">
@@ -21,16 +28,23 @@
                 *ngFor="let a of q.answers"
                 (click)="selectAnswer(q, a)"
                 class="ion-text-wrap"
+                [color]="markAnswer && q.correct_answer === a? 'success': 'primary'"
               >
                 <span [innerHtml]="a"></span>
               </ion-button>
             </div>
 
             <ng-template #select>
-              <ion-button expand="full" (click)="selectAnswer(q, 'True')"
+              <ion-button
+                expand="full"
+                (click)="selectAnswer(q, 'True')"
+                [color]="markAnswer && q.correct_answer === 'True'? 'success': 'primary'"
                 >Yes</ion-button
               >
-              <ion-button expand="full" (click)="selectAnswer(q, 'False')"
+              <ion-button
+                expand="full"
+                (click)="selectAnswer(q, 'False')"
+                [color]="markAnswer && q.correct_answer === 'False'? 'success': 'primary'"
                 >No</ion-button
               >
             </ng-template>
