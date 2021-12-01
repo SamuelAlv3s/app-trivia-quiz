@@ -32,6 +32,7 @@ export class QuestionService {
           let results = data.results;
           results = results.map((q) => {
             q.answers = [...q.incorrect_answers, q.correct_answer];
+            q.answers.sort(() => Math.random() - 0.5);
             return q;
           });
           return results;
