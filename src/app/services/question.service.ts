@@ -26,7 +26,7 @@ export class QuestionService {
 
   getQuestionsForCategories(categoryId) {
     return this.http
-      .get(`https://opentdb.com/api.php?amount=10&caregory=${categoryId}`)
+      .get(`https://opentdb.com/api.php?amount=10&category=${categoryId}`)
       .pipe(
         map((data: any) => {
           let results = data.results;
